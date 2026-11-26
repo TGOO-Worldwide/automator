@@ -47,6 +47,10 @@ export default async function Home() {
           </div>
         )}
       </dl>
+
+      <p style={{ marginTop: "2rem" }}>
+        <a href="/relatorio">Abrir relatório de faturação →</a>
+      </p>
     </main>
   );
 }
