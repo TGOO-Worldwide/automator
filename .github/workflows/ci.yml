@@ -1,0 +1,27 @@
+# Roda em todo push/PR para que erros de build apareçam aqui no GitHub,
+# já que os desenvolvedores não têm acesso aos logs do servidor.
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package*.json
+      - name: Instalar dependências
+        run: if [ -f package-lock.json ]; then npm ci; else npm install; fi
+      - name: Checar tipos
+        run: npm run typecheck
+      - name: Build
+        run: npm run build

@@ -1,0 +1,17 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Modelo de exemplo — pode apagar e criar os seus.
+// Depois de alterar: npm run db:migrate -- --name descricao_da_mudanca
+model Note {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+}
